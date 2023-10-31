@@ -7,14 +7,13 @@ import lombok.Setter;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
 import java.time.Instant;
-import java.util.Date;
 
 @Getter
 @Setter
 @MappedSuperclass
-public class BaseEntity
-{
+public class BaseEntity implements Serializable {
     @Comment("数据创建人")
     private Integer createBy;
     @CreationTimestamp
@@ -24,19 +23,17 @@ public class BaseEntity
     private Integer updateBy;
     @CreationTimestamp
     @Comment("数据更新时间")
-    private Date updateTime;
+    private Instant updateTime;
 
-    public  void createInit()
-    {
+    public void createInit() {
         SysUser sysUser = SecurityUtils.currentUser();
-        this.createBy=sysUser.getUserId();
-        this.updateBy=sysUser.getUserId();
+        this.createBy = sysUser.getUserId();
+        this.updateBy = sysUser.getUserId();
     }
 
-    public void updateInit()
-    {
+    public void updateInit() {
         SysUser sysUser = SecurityUtils.currentUser();
-        this.updateBy=sysUser.getUserId();
-        this.updateTime = new Date();
+        this.updateBy = sysUser.getUserId();
+        this.updateTime = Instant.now();
     }
 }

@@ -11,6 +11,7 @@ public class PageDto
     private Integer pageNum;
     /**每页显示记录数**/
     private Integer pageSize;
+    private Integer current;
     private Collection<Object> data;
     public void setData(Collection<Object> data)
     {
